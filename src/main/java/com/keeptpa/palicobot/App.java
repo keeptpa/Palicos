@@ -3,6 +3,8 @@ package com.keeptpa.palicobot;
 import com.keeptpa.palicobot.commands.*;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 import java.util.EnumSet;
 
@@ -17,8 +19,9 @@ public class App
     {
         BotState.instance.poemAPI = args[1];
         RegisterCommands();
-        JDABuilder.createLight(args[0], EnumSet.of(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT))
+        JDABuilder.create(args[0], EnumSet.of(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_VOICE_STATES))
                 .addEventListeners(new MessageReceiveListener())
+                .setMemberCachePolicy(MemberCachePolicy.VOICE)
                 .build();
     }
 
@@ -29,6 +32,8 @@ public class App
         CommandDealer.instance.registerCommand(new Mockery());
         CommandDealer.instance.registerCommand(new MCServer());
         CommandDealer.instance.registerCommand(new Help());
+        CommandDealer.instance.registerCommand(new JoinVoice());
+        CommandDealer.instance.registerCommand(new Play());
     }
 }
 
