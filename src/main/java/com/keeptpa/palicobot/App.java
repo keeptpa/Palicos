@@ -4,7 +4,6 @@ import com.keeptpa.palicobot.commands.*;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
-import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 import java.util.EnumSet;
 
@@ -34,6 +33,8 @@ public class App
         CommandDealer.instance.registerCommand(new Help());
         CommandDealer.instance.registerCommand(new JoinVoice());
         CommandDealer.instance.registerCommand(new Play());
+        CommandDealer.instance.registerCommand(new Pause());
+        CommandDealer.instance.registerCommand(new PlayControl());
     }
 }
 

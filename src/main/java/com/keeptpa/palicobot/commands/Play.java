@@ -17,8 +17,21 @@ public class Play extends Command {
     }
 
     @Override
-    public void Execute(MessageReceivedEvent event, String[] args) {
-        Chatter.Speak(event.getChannel(), "Wait a minute...");
-        AudioController.instance.AddTrack(args[1]);
+    public void Execute(MessageReceivedEvent event, String[] args) { //let arg above 1 be a song's name
+        String songName = "";
+        for(int i = 1; i < args.length; i++){
+            songName += args[i] + " ";
+        }
+        if(args.length < 1){
+            Chatter.Speak(event.getChannel(), "Not enough args");
+            return;
+        }
+
+        if(!AudioController.isChannelHasConnectedAudio(event.getChannel())){
+            Chatter.Speak(event.getChannel(), "Not connected");
+            return;
+        }
+        Chatter.Speak(event.getChannel(), String.format("Searching [%s] ....👀", songName));
+        AudioController.getController(event.getChannel()).AddTrack(songName);
     }
 }

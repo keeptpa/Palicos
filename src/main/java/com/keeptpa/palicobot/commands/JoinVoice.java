@@ -9,7 +9,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public class JoinVoice extends Command {
     @Override
     public String[] getName() {
-        return new String[]{"joinvoice"};
+        return new String[]{"joinvoice", "jv"};
     }
 
     @Override
@@ -26,6 +26,6 @@ public class JoinVoice extends Command {
 
         AudioChannelUnion channel = event.getMember().getVoiceState().getChannel();
         event.getGuild().getAudioManager().openAudioConnection(channel);
-        AudioController.instance.connect(channel);
+        AudioController.getController(event.getChannel()).connect(channel);
     }
 }
