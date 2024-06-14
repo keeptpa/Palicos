@@ -4,6 +4,7 @@ import com.keeptpa.palicobot.Chatter;
 import com.keeptpa.palicobot.Command;
 import com.keeptpa.palicobot.audio.AudioController;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import net.dv8tion.jda.api.entities.channel.unions.MessageChannelUnion;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class PlayControl extends Command {
@@ -26,20 +27,16 @@ public class PlayControl extends Command {
                 break;
             case "next":
                 AudioController.getController(event.getChannel()).playNext();
-                PrintSongList(event);
                 break;
             case "last":
                 AudioController.getController(event.getChannel()).playPrev();
                 break;
             case "list":
-                PrintSongList(event);
+                AudioController.PrintSongList(event.getChannel());
                 break;
         }
     }
 
-    private static void PrintSongList(MessageReceivedEvent event) {
-        String songList = AudioController.getController(event.getChannel()).getSongListName();
-        Chatter.Speak(event.getChannel(), songList);
-    }
+
 
 }

@@ -1,6 +1,7 @@
 package com.keeptpa.palicobot;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class MessageReceiveListener extends ListenerAdapter {
@@ -18,5 +19,10 @@ public class MessageReceiveListener extends ListenerAdapter {
         }else{
             MessageDealer.instance.messageDealer(event);
         }
+    }
+
+    @Override
+    public void onMessageReactionAdd(MessageReactionAddEvent event){
+
     }
 }

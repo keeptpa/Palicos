@@ -32,7 +32,12 @@ public class LoadResultHandler implements AudioLoadResultHandler {
 
     @Override
     public void playlistLoaded(AudioPlaylist audioPlaylist) {
-        controller.track.queue(audioPlaylist.getTracks().get(0));
+        if (audioPlaylist.getTracks().size() > 1){
+            controller.questSongSelect(audioPlaylist.getTracks());
+        }else{
+            controller.track.queue(audioPlaylist.getTracks().get(0));
+        }
+
         if(controller.player.getPlayingTrack() == null){
             controller.play();
         }

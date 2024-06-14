@@ -1,16 +1,22 @@
 package com.keeptpa.palicobot.audio;
 
 import com.keeptpa.palicobot.Chatter;
+import com.keeptpa.palicobot.commands.PlayControl;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.entities.channel.unions.AudioChannelUnion;
 import net.dv8tion.jda.api.entities.channel.unions.MessageChannelUnion;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.managers.AudioManager;
+import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class AudioController {
 
@@ -79,6 +85,7 @@ public class AudioController {
         if(player.getPlayingTrack() == null){
             player.playTrack(track.tracks.get(0));
             nowPlaying = 0;
+            PrintSongList();
         }
     }
 
@@ -86,7 +93,7 @@ public class AudioController {
         if(track.tracks.size() - 1 >= nowPlaying+1){
             player.playTrack(track.tracks.get(nowPlaying+1));
             nowPlaying++;
-
+            PrintSongList();
         }
     }
 
@@ -94,6 +101,7 @@ public class AudioController {
         if(nowPlaying > 0){
             player.playTrack(track.tracks.get(nowPlaying-1));
             nowPlaying--;
+            PrintSongList();
         }
     }
 
@@ -128,5 +136,29 @@ public class AudioController {
                 Chatter.Speak(channel, "Load failed");
                 break;
         }
+    }
+
+    public void questSongSelect(List<AudioTrack> tracks){
+        Chatter.Speak(channel, "What do you want to listen?");
+        String totalNameList = "";
+
+        for (int i = 0; i < Math.min(10, tracks.size()); i++) {
+            totalNameList += String.format("%d. %s\n", i, tracks.get(i).getInfo().title);
+        }
+
+        MessageCreateAction action = Chatter.SpeakWithoutQueue(channel, totalNameList);
+        action.queue(message -> {
+            for (int i = 0; i < Math.min(10, tracks.size()); i++) {
+                message.addReaction(Emoji.fromUnicode("U+003" + i + " U+20E3")).submit(false);
+            }
+        });
+    }
+
+    public static void PrintSongList(MessageChannelUnion channel) {
+        String songList = AudioController.getController(channel).getSongListName();
+        Chatter.Speak(channel, songList);
+    }
+    public void PrintSongList() {
+        PrintSongList(channel);
     }
 }
