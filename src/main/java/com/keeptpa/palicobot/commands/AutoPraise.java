@@ -17,16 +17,17 @@ public class AutoPraise extends Command {
     }
     @Override
     public void Execute(MessageReceivedEvent event, String[] args) {
-        BotState.instance.autoPraiseMode = !BotState.instance.autoPraiseMode;
-        BotState.instance.autoPraiseEmojiCode.clear();
+        BotState botState = BotState.getBotState(event.getChannel());
+        botState.setAutoPraiseMode(!botState.isAutoPraiseMode());
+        botState.autoPraiseEmojiCode.clear();
         if(args.length > 1){
             for (int i = 1; i < args.length; i++) {
-                BotState.instance.autoPraiseEmojiCode.add(args[i]);
+                botState.autoPraiseEmojiCode.add(args[i]);
             }
         }else{
-            BotState.instance.autoPraiseEmojiCode.add("U+1F928\t");
+            botState.autoPraiseEmojiCode.add("U+1F928\t");
         }
 
-        Chatter.Speak(event.getChannel(), "Auto praise mode " + (BotState.instance.autoPraiseMode ? "enabled" : "disabled"));
+        Chatter.Speak(event.getChannel(), "Auto praise mode " + (botState.isAutoPraiseMode() ? "enabled" : "disabled"));
     }
 }

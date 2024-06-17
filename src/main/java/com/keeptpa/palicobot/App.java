@@ -16,9 +16,9 @@ public class App
 {
     public static void main( String[] args )
     {
-        BotState.instance.poemAPI = args[1];
+        BotConst.POEM_API = args[1];
         RegisterCommands();
-        JDABuilder.create(args[0], EnumSet.of(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_VOICE_STATES))
+        JDABuilder.create(args[0], EnumSet.of(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MESSAGE_REACTIONS))
                 .addEventListeners(new MessageReceiveListener())
                 .setMemberCachePolicy(MemberCachePolicy.VOICE)
                 .build();

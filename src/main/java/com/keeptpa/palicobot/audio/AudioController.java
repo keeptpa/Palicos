@@ -1,5 +1,6 @@
 package com.keeptpa.palicobot.audio;
 
+import com.keeptpa.palicobot.BotState;
 import com.keeptpa.palicobot.Chatter;
 import com.keeptpa.palicobot.commands.PlayControl;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
@@ -15,6 +16,7 @@ import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.managers.AudioManager;
 import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,6 +38,9 @@ public class AudioController {
     LoadResultHandler resultHandler;
     MessageChannelUnion channel;
     int nowPlaying = 0;
+
+    private boolean nowWaitingSelectSong = false;
+    private List<AudioTrack> waitingSelectSongs = new ArrayList<>();
     public AudioController(MessageChannelUnion channel){
         apm = new DefaultAudioPlayerManager();
         dev.lavalink.youtube.YoutubeAudioSourceManager ytSourceManager = new dev.lavalink.youtube.YoutubeAudioSourceManager();
@@ -127,7 +132,7 @@ public class AudioController {
                 Chatter.Speak(channel, "Track loaded");
                 break;
             case PLAYLIST_LOADED:
-                Chatter.Speak(channel, "Playlist loaded, playing the first one");
+                Chatter.Speak(channel, "Playlist loaded.");
                 break;
             case NO_MATCHES:
                 Chatter.Speak(channel, "No matches");
@@ -143,15 +148,17 @@ public class AudioController {
         String totalNameList = "";
 
         for (int i = 0; i < Math.min(10, tracks.size()); i++) {
-            totalNameList += String.format("%d. %s\n", i, tracks.get(i).getInfo().title);
+            totalNameList += String.format("**%d**. %s\n", i, tracks.get(i).getInfo().title);
         }
 
-        MessageCreateAction action = Chatter.SpeakWithoutQueue(channel, totalNameList);
+        MessageCreateAction action = Chatter.SpeakWithoutQueue(channel, totalNameList.toString());
         action.queue(message -> {
             for (int i = 0; i < Math.min(10, tracks.size()); i++) {
                 message.addReaction(Emoji.fromUnicode("U+003" + i + " U+20E3")).submit(false);
             }
         });
+        nowWaitingSelectSong = true;
+        waitingSelectSongs = tracks;
     }
 
     public static void PrintSongList(MessageChannelUnion channel) {
@@ -160,5 +167,20 @@ public class AudioController {
     }
     public void PrintSongList() {
         PrintSongList(channel);
+    }
+
+
+    public boolean isNowWaitingSelectSong(){
+        return nowWaitingSelectSong;
+    }
+    public void OnReceiveReactionSelectingSong(int songIndex){
+        AudioTrack selectedTrack = waitingSelectSongs.get(songIndex);
+        track.queue(selectedTrack);
+        if (player.getPlayingTrack() == null) {
+            player.playTrack(selectedTrack);
+        }
+        nowWaitingSelectSong = false;
+        waitingSelectSongs.clear();
+        nowWaitingSelectSong = false;
     }
 }

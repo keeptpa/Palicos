@@ -36,10 +36,9 @@ public class LoadResultHandler implements AudioLoadResultHandler {
             controller.questSongSelect(audioPlaylist.getTracks());
         }else{
             controller.track.queue(audioPlaylist.getTracks().get(0));
-        }
-
-        if(controller.player.getPlayingTrack() == null){
-            controller.play();
+            if(controller.player.getPlayingTrack() == null){
+                controller.play();
+            }
         }
         controller.loadReport(LoadResult.PLAYLIST_LOADED);
     }
