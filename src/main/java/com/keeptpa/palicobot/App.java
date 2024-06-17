@@ -16,6 +16,7 @@ public class App
 {
     public static void main( String[] args )
     {
+        Configuer.Initialize();
         BotConst.POEM_API = args[1];
         RegisterCommands();
         JDABuilder.create(args[0], EnumSet.of(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MESSAGE_REACTIONS))

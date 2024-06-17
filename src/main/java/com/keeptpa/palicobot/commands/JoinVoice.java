@@ -1,5 +1,6 @@
 package com.keeptpa.palicobot.commands;
 
+import com.keeptpa.palicobot.Configuer;
 import com.keeptpa.palicobot.audio.AudioController;
 import com.keeptpa.palicobot.Chatter;
 import com.keeptpa.palicobot.Command;
@@ -19,8 +20,8 @@ public class JoinVoice extends Command {
 
     @Override
     public void Execute(MessageReceivedEvent event, String[] args) {
-        if(event.getMember().getVoiceState() == null) {
-            Chatter.Speak(event.getChannel(), "You are not in voice channel");
+        if(event.getMember().getVoiceState().getChannel() == null) {
+            Chatter.Speak(event.getChannel(), Configuer.localize("You_Are_Not_In_Audio_Channel"));
             return;
         }
 

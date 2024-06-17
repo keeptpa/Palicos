@@ -2,6 +2,7 @@ package com.keeptpa.palicobot.commands;
 
 import com.keeptpa.palicobot.Chatter;
 import com.keeptpa.palicobot.Command;
+import com.keeptpa.palicobot.Configuer;
 import com.keeptpa.palicobot.HttpClient;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.json.simple.JSONArray;
@@ -23,7 +24,7 @@ public class MCServer extends Command {
 
     @Override
     public void Execute(MessageReceivedEvent event, String[] args) {
-        Chatter.Speak(event.getChannel(), "Wait a minute...");
+        Chatter.Speak(event.getChannel(), Configuer.localize("Wait_For_It"));
 
         String result = HttpClient.get("https://api.mcsrvstat.us/3/" + args[1], null);
 

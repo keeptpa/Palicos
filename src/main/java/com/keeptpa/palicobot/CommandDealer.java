@@ -32,7 +32,7 @@ public class CommandDealer {
             Command command1 = commandList.get(command);
             command1.Execute(event, args);
         } else {
-            Chatter.Speak(event.getChannel(), "Command not found");
+            Chatter.Speak(event.getChannel(), Configuer.localize("Unknown_Command"));
         }
     }
 }

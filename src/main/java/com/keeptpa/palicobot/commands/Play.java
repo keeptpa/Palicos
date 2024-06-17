@@ -2,6 +2,7 @@ package com.keeptpa.palicobot.commands;
 
 import com.keeptpa.palicobot.Chatter;
 import com.keeptpa.palicobot.Command;
+import com.keeptpa.palicobot.Configuer;
 import com.keeptpa.palicobot.audio.AudioController;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -23,15 +24,15 @@ public class Play extends Command {
             songName += args[i] + " ";
         }
         if(args.length < 1){
-            Chatter.Speak(event.getChannel(), "Not enough args");
+            Chatter.Speak(event.getChannel(), Configuer.localize("Not_Enough_Args"));
             return;
         }
 
         if(!AudioController.isChannelHasConnectedAudio(event.getChannel())){
-            Chatter.Speak(event.getChannel(), "Not connected");
+            Chatter.Speak(event.getChannel(), Configuer.localize("Not_Connect_Yet"));
             return;
         }
-        Chatter.Speak(event.getChannel(), String.format("Searching [%s] ....👀", songName));
+        Chatter.Speak(event.getChannel(), String.format(Configuer.localize("Searching_Music"), songName));
         AudioController.getController(event.getChannel()).AddTrack(songName);
     }
 }

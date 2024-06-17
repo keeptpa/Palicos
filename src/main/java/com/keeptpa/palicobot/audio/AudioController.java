@@ -2,6 +2,7 @@ package com.keeptpa.palicobot.audio;
 
 import com.keeptpa.palicobot.BotState;
 import com.keeptpa.palicobot.Chatter;
+import com.keeptpa.palicobot.Configuer;
 import com.keeptpa.palicobot.commands.PlayControl;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
@@ -19,6 +20,7 @@ import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class AudioController {
 
@@ -99,6 +101,11 @@ public class AudioController {
             player.playTrack(track.tracks.get(nowPlaying+1));
             nowPlaying++;
             PrintSongList();
+        }else{
+            player.stopTrack();
+            track.tracks.clear();
+            nowPlaying = 0;
+            Chatter.Speak(channel, Configuer.localize("End_of_List"));
         }
     }
 
@@ -116,6 +123,9 @@ public class AudioController {
 
     public String getSongListName(){
         String totalNameList = "";
+        if (track.tracks.size() == 0){
+            return "No tracks";
+        }
         for (int i = 0; i < track.tracks.size(); i++){
             if (nowPlaying == i){
                 totalNameList += String.format("%d. %s👈🎶\n", i+1, track.tracks.get(i).getInfo().title);
@@ -129,22 +139,22 @@ public class AudioController {
     public void loadReport(LoadResult result){
         switch (result){
             case TRACK_LOADED:
-                Chatter.Speak(channel, "Track loaded");
+                Chatter.Speak(channel, Configuer.localize("Track_Loaded"));
                 break;
             case PLAYLIST_LOADED:
-                Chatter.Speak(channel, "Playlist loaded.");
+                Chatter.Speak(channel, Configuer.localize("Playlist_Loaded"));
                 break;
             case NO_MATCHES:
-                Chatter.Speak(channel, "No matches");
+                Chatter.Speak(channel, Configuer.localize("No_Matches"));
                 break;
             case LOAD_FAILED:
-                Chatter.Speak(channel, "Load failed");
+                Chatter.Speak(channel, Configuer.localize("Load_Failed"));
                 break;
         }
     }
 
     public void questSongSelect(List<AudioTrack> tracks){
-        Chatter.Speak(channel, "What do you want to listen?");
+        Chatter.Speak(channel, Configuer.localize("What_You_Wanna_Listen"));
         String totalNameList = "";
 
         for (int i = 0; i < Math.min(10, tracks.size()); i++) {
@@ -178,6 +188,7 @@ public class AudioController {
         track.queue(selectedTrack);
         if (player.getPlayingTrack() == null) {
             player.playTrack(selectedTrack);
+            PrintSongList();
         }
         nowWaitingSelectSong = false;
         waitingSelectSongs.clear();

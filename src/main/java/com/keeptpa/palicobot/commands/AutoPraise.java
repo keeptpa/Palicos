@@ -3,6 +3,7 @@ package com.keeptpa.palicobot.commands;
 import com.keeptpa.palicobot.BotState;
 import com.keeptpa.palicobot.Chatter;
 import com.keeptpa.palicobot.Command;
+import com.keeptpa.palicobot.Configuer;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class AutoPraise extends Command {
@@ -28,6 +29,6 @@ public class AutoPraise extends Command {
             botState.autoPraiseEmojiCode.add("U+1F928\t");
         }
 
-        Chatter.Speak(event.getChannel(), "Auto praise mode " + (botState.isAutoPraiseMode() ? "enabled" : "disabled"));
+        Chatter.Speak(event.getChannel(), Configuer.localize("Auto_praise_mode") + (botState.isAutoPraiseMode() ? Configuer.localize("Enabled_String") : Configuer.localize("Disabled_String")));
     }
 }
