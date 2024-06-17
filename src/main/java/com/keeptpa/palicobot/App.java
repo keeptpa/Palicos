@@ -37,6 +37,7 @@ public class App
         CommandDealer.instance.registerCommand(new Pause());
         CommandDealer.instance.registerCommand(new PlayControl());
         CommandDealer.instance.registerCommand(new RockPaper());
+        CommandDealer.instance.registerCommand(new DisconnectVoice());
     }
 }
 

@@ -61,6 +61,10 @@ public class AudioController {
         Start();
     }
 
+    public void disconnect(){
+        am.closeAudioConnection();
+    }
+
     public void Start(){
         player.addListener(track);
     }
@@ -193,5 +197,15 @@ public class AudioController {
         nowWaitingSelectSong = false;
         waitingSelectSongs.clear();
         nowWaitingSelectSong = false;
+    }
+
+    public void release(){
+        am = null;
+        player = null;
+        track = null;
+        apm = null;
+        resultHandler = null;
+        channel = null;
+        waitingSelectSongs = null;
     }
 }
