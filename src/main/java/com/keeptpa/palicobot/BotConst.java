@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -28,17 +29,14 @@ public class BotConst {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        URL url = loader.getResource("language/" + languageFileName);
-        if (url == null) {
-            url = loader.getResource("language/en-US.json");
+        InputStream is = BotConst.class.getClassLoader().getResourceAsStream("language/" + languageFileName);
+        if (is == null) {
+            is = BotConst.class.getClassLoader().getResourceAsStream("language/en-US.json");
         }
-        try{
-            Path path = Paths.get(url.toURI());
-            String langJson = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
-            return mapper.readValue(langJson, Map.class);
-        }catch (Exception e){
-
+        try {
+            return mapper.readValue(is, Map.class);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return null;
     }
