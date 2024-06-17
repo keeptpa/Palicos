@@ -27,4 +27,12 @@ public class BotState {
     }
 
     public List<String> autoPraiseEmojiCode = new ArrayList<>();
+
+    private int botRPS = -1;
+    public void setBotRockPaperScissors(int selected) {
+        botRPS = selected;
+    }
+    public int getBotRockPaperScissors() {
+        return botRPS;
+    }
 }

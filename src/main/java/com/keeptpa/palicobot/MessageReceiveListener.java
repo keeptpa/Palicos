@@ -1,5 +1,7 @@
 package com.keeptpa.palicobot;
 
+import com.keeptpa.palicobot.commands.RockPaper;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
@@ -29,5 +31,10 @@ public class MessageReceiveListener extends ListenerAdapter {
     public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event) {
         if(Objects.requireNonNull(Objects.requireNonNull(event.getMember()).getUser()).isBot()) return;
         ReactionDealer.instance.reactionDealer(event);
+    }
+
+    @Override
+    public void onButtonInteraction(ButtonInteractionEvent event) {
+        RockPaper.onButtonClick(event);
     }
 }

@@ -23,5 +23,14 @@
   "Not_Enough_Args": "Not enough arguments",
   "Not_Connect_Yet": "Not connected yet",
   "Searching_Music": "Searching for %s...",
-  "Unknown_Command": "Unknown command"
+  "Unknown_Command": "Unknown command",
+  "Rock_Paper_Scissors": "Rock, paper, scissors",
+  "You_Win": "You win",
+  "You_Lose": "You lose",
+  "You_Picked": "You picked",
+  "I_Picked": "I picked",
+  "Draw": "Draw",
+  "Rock": "Rock",
+  "Paper": "Paper",
+  "Scissors": "Scissors"
 }
