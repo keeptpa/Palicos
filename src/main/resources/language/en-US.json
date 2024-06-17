@@ -32,5 +32,6 @@
   "Draw": "Draw",
   "Rock": "Rock",
   "Paper": "Paper",
-  "Scissors": "Scissors"
+  "Scissors": "Scissors",
+  "My_Latency": "My latency"
 }

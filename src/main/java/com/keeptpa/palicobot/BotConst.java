@@ -31,7 +31,7 @@ public class BotConst {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         URL url = loader.getResource("language/" + languageFileName);
         if (url == null) {
-            url = loader.getResource("language/en_US.json");
+            url = loader.getResource("language/en-US.json");
         }
         try{
             Path path = Paths.get(url.toURI());
