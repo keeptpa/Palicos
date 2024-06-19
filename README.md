@@ -26,7 +26,7 @@ TLDR: This is a program that could play music you want when you chatting in voic
 - Q: Where do I get my Discord API key
 - A: Try google it
 - Q: It will be better to have a blahblah feature.
-- A: Just issue it. I'll see what I can do for you. But keep in mind, The devenloping speed is base on how much time I spent on Discord. But because **I HAVE NO FRIEND** chat with in Discord. So the devenloping speed might be a pity.
+- A: Just issue it. I'll see what I can do for you. But keep in mind, The developing speed is base on how much time I spent on Discord. But because **I HAVE NO FRIEND** chat with in Discord. So the developing speed might be a pity.
 
 # Huge Thanks
 - [youtube-source](https://github.com/lavalink-devs/youtube-source)
