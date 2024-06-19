@@ -2,6 +2,7 @@ package com.keeptpa.palicobot.commands;
 
 import com.keeptpa.palicobot.Chatter;
 import com.keeptpa.palicobot.Command;
+import com.keeptpa.palicobot.Configuer;
 import com.keeptpa.palicobot.audio.AudioController;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.entities.channel.unions.MessageChannelUnion;
@@ -33,6 +34,13 @@ public class PlayControl extends Command {
                 break;
             case "list":
                 AudioController.PrintSongList(event.getChannel());
+                break;
+            case "cycle":
+                AudioController.getController(event.getChannel()).setCyclePlay(!AudioController.getController(event.getChannel()).isCyclePlay());
+                Chatter.speak(event.getChannel(), Configuer.localize("CyclePlay") + (AudioController.getController(event.getChannel()).isCyclePlay() ? Configuer.localize("Enabled_String") : Configuer.localize("Disabled_String")));
+                break;
+            default:
+                Chatter.speak(event.getChannel(), Configuer.localize("Unknown_Command"));
                 break;
         }
     }

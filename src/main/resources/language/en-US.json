@@ -33,5 +33,6 @@
   "Rock": "Rock",
   "Paper": "Paper",
   "Scissors": "Scissors",
-  "My_Latency": "My latency"
+  "My_Latency": "My latency",
+  "CyclePlay": "Cycle play mode"
 }

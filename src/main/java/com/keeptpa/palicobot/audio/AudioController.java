@@ -36,6 +36,7 @@ public class AudioController {
     LoadResultHandler resultHandler;
     MessageChannelUnion channel;
     int nowPlaying = 0;
+    boolean cyclePlay = false;
 
     private boolean nowWaitingSelectSong = false;
     private List<AudioTrack> waitingSelectSongs = new ArrayList<>();
@@ -92,6 +93,15 @@ public class AudioController {
         return player.isPaused();
     }
 
+    public boolean setCyclePlay(boolean b){
+        cyclePlay = b;
+        return cyclePlay;
+    }
+
+    public boolean isCyclePlay(){
+        return cyclePlay;
+    }
+
     public void play(){
         if(player.getPlayingTrack() == null){
             player.playTrack(track.tracks.get(0));
@@ -105,11 +115,15 @@ public class AudioController {
             player.playTrack(track.tracks.get(nowPlaying+1));
             nowPlaying++;
             PrintSongList();
-        }else{
+        }else if(!cyclePlay){
             player.stopTrack();
             track.tracks.clear();
             nowPlaying = 0;
             Chatter.speak(channel, Configuer.localize("End_of_List"));
+        }else{
+            player.playTrack(track.tracks.get(0));
+            nowPlaying = 0;
+            PrintSongList();
         }
     }
 

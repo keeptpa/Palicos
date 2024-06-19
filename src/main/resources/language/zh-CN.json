@@ -33,5 +33,6 @@
   "Rock": "石头",
   "Paper": "布",
   "Scissors": "剪刀",
-  "My_Latency": "我的延迟"
+  "My_Latency": "我的延迟",
+  "CyclePlay": "循环播放"
 }
