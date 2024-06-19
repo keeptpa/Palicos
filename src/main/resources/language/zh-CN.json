@@ -34,5 +34,6 @@
   "Paper": "布",
   "Scissors": "剪刀",
   "My_Latency": "我的延迟",
-  "CyclePlay": "循环播放"
+  "CyclePlay": "循环播放",
+  "Poem_API_Not_Set": "诗词 API 未设置"
 }

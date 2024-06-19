@@ -18,6 +18,12 @@ public class GetPoem extends Command {
 
     @Override
     public void Execute(MessageReceivedEvent event, String[] args) {
+        //check if api is null or ""
+        if(BotConst.POEM_API == null || BotConst.POEM_API.isEmpty()) {
+            Chatter.speak(event.getChannel(), Configuer.localize("Poem_API_Not_Set"));
+            return;
+        }
+
         String reply = HttpClient.get("https://api.apileague.com/retrieve-random-poem?api-key=" + BotConst.POEM_API, null);
         JSONObject obj = (JSONObject) JSONValue.parse(reply);
         reply = obj.get("poem").toString();

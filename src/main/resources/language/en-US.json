@@ -34,5 +34,6 @@
   "Paper": "Paper",
   "Scissors": "Scissors",
   "My_Latency": "My latency",
-  "CyclePlay": "Cycle play mode"
+  "CyclePlay": "Cycle play mode",
+  "Poem_API_Not_Set": "Poem API not set"
 }
