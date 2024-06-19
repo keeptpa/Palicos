@@ -29,6 +29,6 @@ public class AutoPraise extends Command {
             botState.autoPraiseEmojiCode.add("U+1F928\t");
         }
 
-        Chatter.Speak(event.getChannel(), Configuer.localize("Auto_praise_mode") + (botState.isAutoPraiseMode() ? Configuer.localize("Enabled_String") : Configuer.localize("Disabled_String")));
+        Chatter.speak(event.getChannel(), Configuer.localize("Auto_praise_mode") + (botState.isAutoPraiseMode() ? Configuer.localize("Enabled_String") : Configuer.localize("Disabled_String")));
     }
 }

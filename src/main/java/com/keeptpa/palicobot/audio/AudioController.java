@@ -1,9 +1,7 @@
 package com.keeptpa.palicobot.audio;
 
-import com.keeptpa.palicobot.BotState;
 import com.keeptpa.palicobot.Chatter;
 import com.keeptpa.palicobot.Configuer;
-import com.keeptpa.palicobot.commands.PlayControl;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
@@ -13,14 +11,12 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.entities.channel.unions.AudioChannelUnion;
 import net.dv8tion.jda.api.entities.channel.unions.MessageChannelUnion;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
-import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.managers.AudioManager;
 import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 public class AudioController {
 
@@ -69,8 +65,12 @@ public class AudioController {
         player.addListener(track);
     }
 
-    public void AddTrack(String id){
+    public void searchYTB(String id){
         apm.loadItem("ytsearch:" + id, resultHandler);
+    }
+
+    public void addYTBSong(String youtubeCode){
+        apm.loadItem(youtubeCode, resultHandler);
     }
 
     public void Pause(){
@@ -109,7 +109,7 @@ public class AudioController {
             player.stopTrack();
             track.tracks.clear();
             nowPlaying = 0;
-            Chatter.Speak(channel, Configuer.localize("End_of_List"));
+            Chatter.speak(channel, Configuer.localize("End_of_List"));
         }
     }
 
@@ -143,22 +143,22 @@ public class AudioController {
     public void loadReport(LoadResult result){
         switch (result){
             case TRACK_LOADED:
-                Chatter.Speak(channel, Configuer.localize("Track_Loaded"));
+                Chatter.speak(channel, Configuer.localize("Track_Loaded"));
                 break;
             case PLAYLIST_LOADED:
-                Chatter.Speak(channel, Configuer.localize("Playlist_Loaded"));
+                Chatter.speak(channel, Configuer.localize("Playlist_Loaded"));
                 break;
             case NO_MATCHES:
-                Chatter.Speak(channel, Configuer.localize("No_Matches"));
+                Chatter.speak(channel, Configuer.localize("No_Matches"));
                 break;
             case LOAD_FAILED:
-                Chatter.Speak(channel, Configuer.localize("Load_Failed"));
+                Chatter.speak(channel, Configuer.localize("Load_Failed"));
                 break;
         }
     }
 
     public void questSongSelect(List<AudioTrack> tracks){
-        Chatter.Speak(channel, Configuer.localize("What_You_Wanna_Listen"));
+        Chatter.speak(channel, Configuer.localize("What_You_Wanna_Listen"));
         String totalNameList = "";
 
         for (int i = 0; i < Math.min(10, tracks.size()); i++) {
@@ -177,7 +177,7 @@ public class AudioController {
 
     public static void PrintSongList(MessageChannelUnion channel) {
         String songList = AudioController.getController(channel).getSongListName();
-        Chatter.Speak(channel, songList);
+        Chatter.speak(channel, songList);
     }
     public void PrintSongList() {
         PrintSongList(channel);

@@ -27,6 +27,6 @@ public class Help extends Command {
             result.append(command).append(" - ").append(cmds.getDescription()).append("\n");
         }
 
-        Chatter.Speak(event.getChannel(), result.toString());
+        Chatter.speak(event.getChannel(), result.toString());
     }
 }

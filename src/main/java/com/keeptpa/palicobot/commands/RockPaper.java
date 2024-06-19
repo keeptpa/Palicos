@@ -68,14 +68,14 @@ public class RockPaper extends Command {
         if(playerClickID.equals("Paper")) playerSelect = 2;
         if(playerClickID.equals("Scissors")) playerSelect = 3;
 
-        Chatter.Speak(event.getChannel(), Configuer.localize("You_Picked") + " " +  Configuer.localize(playerClickID));
-        Chatter.Speak(event.getChannel(), Configuer.localize("I_Picked") + Configuer.localize(botSelectID));
+        Chatter.speak(event.getChannel(), Configuer.localize("You_Picked") + " " +  Configuer.localize(playerClickID));
+        Chatter.speak(event.getChannel(), Configuer.localize("I_Picked") + Configuer.localize(botSelectID));
         if(playerSelect > botSelect && playerSelect - botSelect == 1 || playerSelect < botSelect && Math.abs(playerSelect - botSelect) == 2) {
-            Chatter.Speak(event.getChannel(), Configuer.localize("You_Win"));
+            Chatter.speak(event.getChannel(), Configuer.localize("You_Win"));
         }else if(playerSelect != botSelect) {
-            Chatter.Speak(event.getChannel(), Configuer.localize("You_Lose"));
+            Chatter.speak(event.getChannel(), Configuer.localize("You_Lose"));
         }else{
-            Chatter.Speak(event.getChannel(), Configuer.localize("Draw"));
+            Chatter.speak(event.getChannel(), Configuer.localize("Draw"));
         }
         event.editMessage(Configuer.localize("Rock_Paper_Scissors")).queue();
         BotState.getBotState(event.getChannel()).setBotRockPaperScissors(-1);

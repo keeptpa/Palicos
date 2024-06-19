@@ -6,6 +6,9 @@ import com.keeptpa.palicobot.Configuer;
 import com.keeptpa.palicobot.audio.AudioController;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Play extends Command {
     @Override
     public String[] getName() {
@@ -24,15 +27,33 @@ public class Play extends Command {
             songName += args[i] + " ";
         }
         if(args.length < 1){
-            Chatter.Speak(event.getChannel(), Configuer.localize("Not_Enough_Args"));
+            Chatter.speak(event.getChannel(), Configuer.localize("Not_Enough_Args"));
             return;
         }
 
         if(!AudioController.isChannelHasConnectedAudio(event.getChannel())){
-            Chatter.Speak(event.getChannel(), Configuer.localize("Not_Connect_Yet"));
+            Chatter.speak(event.getChannel(), Configuer.localize("Not_Connect_Yet"));
             return;
         }
-        Chatter.Speak(event.getChannel(), String.format(Configuer.localize("Searching_Music"), songName));
-        AudioController.getController(event.getChannel()).AddTrack(songName);
+        Chatter.speak(event.getChannel(), String.format(Configuer.localize("Searching_Music"), songName));
+
+        if(songName.contains("youtube.com")){
+            String videoId = getYouTubeId(songName);
+            AudioController.getController(event.getChannel()).addYTBSong(videoId);
+        }else{
+            AudioController.getController(event.getChannel()).searchYTB(songName);
+        }
+    }
+
+    //Actually I think this is a built-in function in lavaplayer.
+    private String getYouTubeId (String youTubeUrl) { // Thanks Roman Smoliar@StackOverflow
+        String pattern = "(?<=youtu.be/|watch\\?v=|/videos/|embed\\/)[^#\\&\\?]*";
+        Pattern compiledPattern = Pattern.compile(pattern);
+        Matcher matcher = compiledPattern.matcher(youTubeUrl);
+        if(matcher.find()){
+            return matcher.group();
+        } else {
+            return "error";
+        }
     }
 }

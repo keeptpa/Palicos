@@ -9,8 +9,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-import java.util.ArrayList;
-
 public class MCServer extends Command {
     @Override
     public String[] getName() {
@@ -24,7 +22,7 @@ public class MCServer extends Command {
 
     @Override
     public void Execute(MessageReceivedEvent event, String[] args) {
-        Chatter.Speak(event.getChannel(), Configuer.localize("Wait_For_It"));
+        Chatter.speak(event.getChannel(), Configuer.localize("Wait_For_It"));
 
         String result = HttpClient.get("https://api.mcsrvstat.us/3/" + args[1], null);
 
@@ -37,6 +35,6 @@ public class MCServer extends Command {
             allPlayers.append(((JSONObject) list.get(i)).get("name")).append(", ");
         }
         //Chatter.Speak(event.getChannel(), allPlayers);
-        Chatter.Speak(event.getChannel(), "服务器中玩家：" + allPlayers);
+        Chatter.speak(event.getChannel(), "服务器中玩家：" + allPlayers);
     }
 }

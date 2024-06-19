@@ -1,8 +1,6 @@
 package com.keeptpa.palicobot;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +30,7 @@ public class CommandDealer {
             Command command1 = commandList.get(command);
             command1.Execute(event, args);
         } else {
-            Chatter.Speak(event.getChannel(), Configuer.localize("Unknown_Command"));
+            Chatter.speak(event.getChannel(), Configuer.localize("Unknown_Command"));
         }
     }
 }

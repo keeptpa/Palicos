@@ -1,6 +1,5 @@
 package com.keeptpa.palicobot.commands;
 
-import com.keeptpa.palicobot.BotState;
 import com.keeptpa.palicobot.Chatter;
 import com.keeptpa.palicobot.Command;
 import com.keeptpa.palicobot.Configuer;
@@ -22,6 +21,6 @@ public class Pause extends Command {
     @Override
     public void Execute(MessageReceivedEvent event, String[] args) {
         AudioController.getController(event.getChannel()).togglePause();
-        Chatter.Speak(event.getChannel(), AudioController.getController(event.getChannel()).isPaused() ? Configuer.localize("Music_Paused") : Configuer.localize("Music_Resume"));
+        Chatter.speak(event.getChannel(), AudioController.getController(event.getChannel()).isPaused() ? Configuer.localize("Music_Paused") : Configuer.localize("Music_Resume"));
     }
 }

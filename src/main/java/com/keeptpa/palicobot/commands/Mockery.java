@@ -20,7 +20,7 @@ public class Mockery extends Command {
     public void Execute(MessageReceivedEvent event, String[] args) {
 
         event.getMessage().getMentions().getUsers().forEach(user ->
-                Chatter.Speak(event.getChannel(), String.format("<@%s> 👈🤣", user.getId())
+                Chatter.speak(event.getChannel(), String.format("<@%s> 👈🤣", user.getId())
                 ));
     }
 }

@@ -17,6 +17,6 @@ public class Ping extends Command {
     }
     @Override
     public void Execute(MessageReceivedEvent event, String[] args) {
-        Chatter.Speak(event.getChannel(), String.format("%s: %s, PONG! <@%s>", Configuer.localize("My_Latency"), event.getJDA().getGatewayPing(), event.getAuthor().getId()));
+        Chatter.speak(event.getChannel(), String.format("%s: %s, PONG! <@%s>", Configuer.localize("My_Latency"), event.getJDA().getGatewayPing(), event.getAuthor().getId()));
     }
 }

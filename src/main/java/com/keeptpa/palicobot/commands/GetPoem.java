@@ -21,6 +21,6 @@ public class GetPoem extends Command {
         String reply = HttpClient.get("https://api.apileague.com/retrieve-random-poem?api-key=" + BotConst.POEM_API, null);
         JSONObject obj = (JSONObject) JSONValue.parse(reply);
         reply = obj.get("poem").toString();
-        Chatter.Speak(event.getChannel(), reply);
+        Chatter.speak(event.getChannel(), reply);
     }
 }

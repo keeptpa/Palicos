@@ -21,7 +21,7 @@ public class JoinVoice extends Command {
     @Override
     public void Execute(MessageReceivedEvent event, String[] args) {
         if(event.getMember().getVoiceState().getChannel() == null) {
-            Chatter.Speak(event.getChannel(), Configuer.localize("You_Are_Not_In_Audio_Channel"));
+            Chatter.speak(event.getChannel(), Configuer.localize("You_Are_Not_In_Audio_Channel"));
             return;
         }
 

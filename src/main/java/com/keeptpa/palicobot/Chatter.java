@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.entities.channel.unions.MessageChannelUnion;
 import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
 
 public class Chatter {
-    public static MessageCreateAction Speak(MessageChannelUnion channel, String message) {
+    public static MessageCreateAction speak(MessageChannelUnion channel, String message) {
         MessageCreateAction action = channel.sendMessage(message);
         action.queue();
         return action;
