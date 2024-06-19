@@ -8,12 +8,15 @@ import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.unions.AudioChannelUnion;
 import net.dv8tion.jda.api.entities.channel.unions.MessageChannelUnion;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.managers.AudioManager;
 import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,6 +63,7 @@ public class AudioController {
 
     public void disconnect(){
         am.closeAudioConnection();
+        release();
     }
 
     public void Start(){
@@ -104,34 +108,36 @@ public class AudioController {
 
     public void play(){
         if(player.getPlayingTrack() == null){
-            player.playTrack(track.tracks.get(0));
+            play(track.tracks.get(0));
             nowPlaying = 0;
-            PrintSongList();
         }
+    }
+
+    public void play(AudioTrack track){
+        player.playTrack(track);
+        PrintSongListWithThumbnail();
     }
 
     public void playNext(){
         if(track.tracks.size() - 1 >= nowPlaying+1){
-            player.playTrack(track.tracks.get(nowPlaying+1));
             nowPlaying++;
-            PrintSongList();
+            play(track.tracks.get(nowPlaying));
         }else if(!cyclePlay){
+            nowPlaying = 0;
             player.stopTrack();
             track.tracks.clear();
-            nowPlaying = 0;
             Chatter.speak(channel, Configuer.localize("End_of_List"));
         }else{
-            player.playTrack(track.tracks.get(0));
-            nowPlaying = 0;
-            PrintSongList();
+            track.tracks.add(track.tracks.get(0).makeClone());
+            track.tracks.remove(0);
+            play(track.tracks.get(nowPlaying));
         }
     }
 
     public void playPrev(){
         if(nowPlaying > 0){
-            player.playTrack(track.tracks.get(nowPlaying-1));
             nowPlaying--;
-            PrintSongList();
+            play(track.tracks.get(nowPlaying));
         }
     }
 
@@ -193,8 +199,20 @@ public class AudioController {
         String songList = AudioController.getController(channel).getSongListName();
         Chatter.speak(channel, songList);
     }
-    public void PrintSongList() {
-        PrintSongList(channel);
+    public void PrintSongListWithThumbnail() {
+        String nowPlayingThumbnailURL = player.getPlayingTrack().getInfo().artworkUrl;
+        if (nowPlayingThumbnailURL == null){
+            nowPlayingThumbnailURL = String.format("https://img.youtube.com/vi/%s/default.jpg", player.getPlayingTrack().getIdentifier());
+        }
+        String songList = AudioController.getController(channel).getSongListName();
+        MessageEmbed emb1 = new EmbedBuilder()
+                //.setThumbnail(nowPlayingThumbnailURL)
+                .setTitle(Configuer.localize("Now_Playing"))
+                .setDescription(player.getPlayingTrack().getInfo().title)
+                .setColor(Color.GRAY)
+                .setImage(nowPlayingThumbnailURL)
+                .build();
+        Chatter.SpeakWithoutQueue(channel, songList).addEmbeds(emb1).queue();
     }
 
 
@@ -205,8 +223,8 @@ public class AudioController {
         AudioTrack selectedTrack = waitingSelectSongs.get(songIndex);
         track.queue(selectedTrack);
         if (player.getPlayingTrack() == null) {
-            player.playTrack(selectedTrack);
-            PrintSongList();
+            play();
+            //PrintSongListWithThumbnail();
         }
         nowWaitingSelectSong = false;
         waitingSelectSongs.clear();
@@ -214,6 +232,7 @@ public class AudioController {
     }
 
     public void release(){
+        controllers.remove(channel.getId());
         am = null;
         player = null;
         track = null;

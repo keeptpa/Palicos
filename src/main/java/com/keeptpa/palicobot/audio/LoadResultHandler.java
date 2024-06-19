@@ -21,8 +21,6 @@ public class LoadResultHandler implements AudioLoadResultHandler {
     @Override
     public void trackLoaded(AudioTrack audioTrack) {
         System.out.println("Track loaded: " + audioTrack.getInfo().title);
-        //AudioController.getController(controller.track.queue(audioTrack));
-        //AudioController.getController(controller.player.playTrack(audioTrack));
         controller.track.queue(audioTrack);
         if(controller.player.getPlayingTrack() == null){
             controller.play();

@@ -4,6 +4,7 @@ import com.keeptpa.palicobot.Chatter;
 import com.keeptpa.palicobot.Command;
 import com.keeptpa.palicobot.Configuer;
 import com.keeptpa.palicobot.audio.AudioController;
+import com.keeptpa.palicobot.audio.AudioUtil;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.regex.Matcher;
@@ -38,7 +39,7 @@ public class Play extends Command {
         Chatter.speak(event.getChannel(), String.format(Configuer.localize("Searching_Music"), songName));
 
         if(songName.contains("youtube.com")){
-            String videoId = getYouTubeId(songName);
+            String videoId = AudioUtil.getYouTubeId(songName);
             AudioController.getController(event.getChannel()).addYTBSong(videoId);
         }else{
             AudioController.getController(event.getChannel()).searchYTB(songName);
@@ -46,14 +47,5 @@ public class Play extends Command {
     }
 
     //Actually I think this is a built-in function in lavaplayer.
-    private String getYouTubeId (String youTubeUrl) { // Thanks Roman Smoliar@StackOverflow
-        String pattern = "(?<=youtu.be/|watch\\?v=|/videos/|embed\\/)[^#\\&\\?]*";
-        Pattern compiledPattern = Pattern.compile(pattern);
-        Matcher matcher = compiledPattern.matcher(youTubeUrl);
-        if(matcher.find()){
-            return matcher.group();
-        } else {
-            return "error";
-        }
-    }
+
 }
