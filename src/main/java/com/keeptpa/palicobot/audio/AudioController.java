@@ -233,7 +233,7 @@ public class AudioController {
 
     public void release(){
         controllers.remove(channel.getId());
-        am = null;
+        //am = null;
         player = null;
         track = null;
         apm = null;
