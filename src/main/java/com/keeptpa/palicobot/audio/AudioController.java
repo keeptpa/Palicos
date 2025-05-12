@@ -8,6 +8,7 @@ import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import dev.lavalink.youtube.YoutubeAudioSourceManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.unions.AudioChannelUnion;
@@ -32,6 +33,12 @@ public class AudioController {
         return controllers.get(channel.getId());
     }
 
+    public static void removeController(MessageChannelUnion channel){
+        if(controllers.containsKey(channel.getId())){
+            controllers.remove(channel.getId());
+        }
+    }
+
     AudioManager am = null;;
     AudioPlayer player = null;
     SoundTrack track = null;
@@ -45,8 +52,8 @@ public class AudioController {
     private List<AudioTrack> waitingSelectSongs = new ArrayList<>();
     public AudioController(MessageChannelUnion channel){
         apm = new DefaultAudioPlayerManager();
-        dev.lavalink.youtube.YoutubeAudioSourceManager ytSourceManager = new dev.lavalink.youtube.YoutubeAudioSourceManager();
-        apm.registerSourceManager(ytSourceManager);
+        dev.lavalink.youtube.YoutubeAudioSourceManager ysm = new YoutubeAudioSourceManager();
+        apm.registerSourceManager(ysm);
         AudioSourceManagers.registerRemoteSources(apm);
         player = apm.createPlayer();
         track = new SoundTrack(this);

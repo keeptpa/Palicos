@@ -19,5 +19,6 @@ public class DisconnectVoice extends Command {
     @Override
     public void Execute(MessageReceivedEvent event, String[] args) {
         AudioController.getController(event.getChannel()).disconnect();
+        AudioController.removeController(event.getChannel());
     }
 }
